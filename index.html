@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dar Al Arqum | IBAN</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f5fb;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+.card {
+  background: white;
+  padding: 35px 22px;
+  border-radius: 18px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 6px 25px #00000012;
+}
+h2 { color: #653879; margin-bottom: 8px; }
+.arabic {
+  font-size: 21px;
+  line-height: 1.8;
+  color: #653879;
+}
+p { color: #555; line-height: 1.6; }
+.iban {
+  background: #f3edf7;
+  padding: 15px 8px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  overflow-wrap: anywhere;
+  margin: 22px 0;
+}
+button {
+  background: #653879;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 16px 25px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+#message {
+  color: #238447;
+  font-weight: bold;
+  min-height: 25px;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="arabic" dir="rtl">
+    مركز دار الأرقم لتعليم القرآن الكريم للنساء
+  </div>
+
+  <h2>Dar Al Arqum Quranic Studies Centre</h2>
+
+  <p>Bank Transfer Details<br>
+  بيانات التحويل البنكي</p>
+
+  <div class="iban" id="iban">
+    BH96BIBB00100000158658
+  </div>
+
+  <button onclick="copyIBAN()">
+    Copy IBAN | نسخ الآيبان
+  </button>
+
+  <p id="message" role="status" aria-live="polite"></p>
+
+  <p>
+    Please copy the IBAN and paste it into
+    your banking application.
+  </p>
+  <p dir="rtl">
+    يُرجى نسخ رقم الآيبان ولصقه في تطبيق البنك لإتمام التحويل.
+  </p>
+</div>
+
+<script>
+async function copyIBAN() {
+  const iban = document.getElementById("iban").innerText.trim();
+  const message = document.getElementById("message");
+
+  try {
+    await navigator.clipboard.writeText(iban);
+    message.textContent = "IBAN Copied Successfully ✓ تم نسخ الآيبان";
+  } catch (error) {
+    const input = document.createElement("textarea");
+    input.value = iban;
+    input.style.position = "fixed";
+    input.style.opacity = "0";
+    document.body.appendChild(input);
+    input.focus();
+    input.select();
+
+    const copied = document.execCommand("copy");
+    input.remove();
+
+    message.textContent = copied
+      ? "IBAN Copied Successfully ✓ تم نسخ الآيبان"
+      : "Please select and copy the IBAN manually.";
+  }
+}
+</script>
+
+</body>
+</html>
